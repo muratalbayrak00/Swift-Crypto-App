@@ -25,6 +25,7 @@
 		D65815012BED7E92004E1786 /* CoinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D65814FF2BED7E92004E1786 /* CoinCell.xib */; };
 		D65815042BED8845004E1786 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = D65815032BED8845004E1786 /* SDWebImage */; };
 		D65815062BED8845004E1786 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D65815052BED8845004E1786 /* SDWebImageMapKit */; };
+		D6E3469A2BF26E1500633B2C /* FavoriteMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E346992BF26E1500633B2C /* FavoriteMenuController.swift */; };
 		D6F06DD92BF1A77E00822C6E /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F06DD82BF1A77E00822C6E /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		D65814F82BED35D6004E1786 /* CoinListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListController.swift; sourceTree = "<group>"; };
 		D65814FE2BED7E92004E1786 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
 		D65814FF2BED7E92004E1786 /* CoinCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinCell.xib; sourceTree = "<group>"; };
+		D6E346992BF26E1500633B2C /* FavoriteMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMenuController.swift; sourceTree = "<group>"; };
 		D6F06DD82BF1A77E00822C6E /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,13 +126,14 @@
 				D635C9332BEB8D69000835A5 /* AppDelegate.swift */,
 				D635C9352BEB8D69000835A5 /* SceneDelegate.swift */,
 				D65814F82BED35D6004E1786 /* CoinListController.swift */,
+				D6F06DD82BF1A77E00822C6E /* DetailsViewController.swift */,
+				D6E346992BF26E1500633B2C /* FavoriteMenuController.swift */,
 				D635C9372BEB8D69000835A5 /* ViewController.swift */,
 				D635C9392BEB8D69000835A5 /* Main.storyboard */,
 				D635C93F2BEB8D6A000835A5 /* Assets.xcassets */,
 				D635C9412BEB8D6A000835A5 /* LaunchScreen.storyboard */,
 				D635C9442BEB8D6A000835A5 /* Info.plist */,
 				D635C93C2BEB8D69000835A5 /* Crypto_App.xcdatamodeld */,
-				D6F06DD82BF1A77E00822C6E /* DetailsViewController.swift */,
 			);
 			path = "Crypto-App";
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6E3469A2BF26E1500633B2C /* FavoriteMenuController.swift in Sources */,
 				D635C93E2BEB8D69000835A5 /* Crypto_App.xcdatamodeld in Sources */,
 				D635C9382BEB8D69000835A5 /* ViewController.swift in Sources */,
 				D65815002BED7E92004E1786 /* CoinCell.swift in Sources */,

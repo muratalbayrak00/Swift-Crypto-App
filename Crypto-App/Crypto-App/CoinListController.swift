@@ -40,7 +40,6 @@ class CoinListController: UIViewController {
             switch result {
             case .success(let welcome):
                 self.allCoins = welcome.data.coins
-                //deneme()
                 formatCoinsPrice()
                 formatCoinsChange()
                 reloadData()
@@ -56,12 +55,7 @@ class CoinListController: UIViewController {
         
     }
     
-    func deneme() {
-        print("hello")
-        for index in 0..<self.allCoins.count {
-            print("\(self.allCoins[index].symbol):  \(self.allCoins[index].marketCap)")
-        }
-    }
+
     
     @objc func filterButtonTapped() {
         showPicker()
@@ -144,7 +138,15 @@ extension CoinListController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 75
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCoin = allCoins[indexPath.row]
+        if let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsPageViewController") as? DetailsViewController {
+            detailsVC.selectedCoin = selectedCoin
+            self.navigationController?.pushViewController(detailsVC, animated: true)
+        }
     }
     
 }

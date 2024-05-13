@@ -22,7 +22,7 @@ public struct DataClass: Decodable {
 
 }
 
-public struct Coin: Decodable {
+public struct Coin: Decodable, Encodable {
     public let uuid, symbol, name: String
     public let color: String?
     public let iconURL: String
