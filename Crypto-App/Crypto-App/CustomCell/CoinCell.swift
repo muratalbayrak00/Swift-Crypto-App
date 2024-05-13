@@ -37,7 +37,15 @@ class CoinCell: UITableViewCell {
         coinSymbol.text = model.symbol
         coinName.text = model.name
         coinPrice.text = model.price
-        coinChange.text = model.change
+        
+        if (model.change.starts(with: "+")) {
+            coinChange.text = model.change
+            coinChange.textColor = .green
+        } else {
+            coinChange.text = model.change
+            coinChange.textColor = .red
+        }
+       
     }
     
 }

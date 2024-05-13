@@ -26,9 +26,9 @@ public struct Coin: Decodable {
     public let uuid, symbol, name: String
     public let color: String?
     public let iconURL: String
-    public let marketCap, price: String
+    public var marketCap, price: String
     public let listedAt, tier: Int
-    public let change: String
+    public var change: String
     public let rank: Int
     public let sparkline: [String]
     public let lowVolume: Bool
