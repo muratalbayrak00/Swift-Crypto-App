@@ -25,6 +25,7 @@
 		D65815012BED7E92004E1786 /* CoinCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D65814FF2BED7E92004E1786 /* CoinCell.xib */; };
 		D65815042BED8845004E1786 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = D65815032BED8845004E1786 /* SDWebImage */; };
 		D65815062BED8845004E1786 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D65815052BED8845004E1786 /* SDWebImageMapKit */; };
+		D6F06DD92BF1A77E00822C6E /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F06DD82BF1A77E00822C6E /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		D65814F82BED35D6004E1786 /* CoinListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListController.swift; sourceTree = "<group>"; };
 		D65814FE2BED7E92004E1786 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
 		D65814FF2BED7E92004E1786 /* CoinCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinCell.xib; sourceTree = "<group>"; };
+		D6F06DD82BF1A77E00822C6E /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				D635C9412BEB8D6A000835A5 /* LaunchScreen.storyboard */,
 				D635C9442BEB8D6A000835A5 /* Info.plist */,
 				D635C93C2BEB8D69000835A5 /* Crypto_App.xcdatamodeld */,
+				D6F06DD82BF1A77E00822C6E /* DetailsViewController.swift */,
 			);
 			path = "Crypto-App";
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				D635C9382BEB8D69000835A5 /* ViewController.swift in Sources */,
 				D65815002BED7E92004E1786 /* CoinCell.swift in Sources */,
 				D635C9342BEB8D69000835A5 /* AppDelegate.swift in Sources */,
+				D6F06DD92BF1A77E00822C6E /* DetailsViewController.swift in Sources */,
 				D635C9362BEB8D69000835A5 /* SceneDelegate.swift in Sources */,
 				D65814F92BED35D6004E1786 /* CoinListController.swift in Sources */,
 			);
