@@ -10,12 +10,12 @@ These instructions will guide you to set up the project on your local machine. T
 
 To get started with the project, the following software needs to be installed:
 
-- Xcode 12.x
-- Swift 5.x
+- Xcode 15.2
+- Swift 5.9.2
 
 ### Installation
 
-1. Clone this repository: https://github.com/muratalbayrak00
+1. Clone this repository: https://github.com/muratalbayrak00/Swift-Crypto-App
 2. Open the `Crypto-App.xcodeproj` file in Xcode.
 3. Build and run the project (`Cmd + R`).
    
