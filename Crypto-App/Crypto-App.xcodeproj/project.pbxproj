@@ -33,6 +33,10 @@
 		D6E346A72BF3735B00633B2C /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E346A62BF3735A00633B2C /* ViewModel.swift */; };
 		D6E346AA2BF392E700633B2C /* FavoriteMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E346A92BF392E700633B2C /* FavoriteMenuViewModel.swift */; };
 		D6E346AD2BF3932000633B2C /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E346AC2BF3932000633B2C /* DetailsViewModel.swift */; };
+		D6E346B32BF3CBE400633B2C /* LoadingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E346B22BF3CBE400633B2C /* LoadingViewTests.swift */; };
+		D6E346B52BF3CE2A00633B2C /* CoinListControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E346B42BF3CE2A00633B2C /* CoinListControllerTest.swift */; };
+		D6E346B72BF3CF7700633B2C /* FavoriteMenuControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E346B62BF3CF7700633B2C /* FavoriteMenuControllerTest.swift */; };
+		D6E346B92BF3CFDE00633B2C /* DetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E346B82BF3CFDE00633B2C /* DetailsViewControllerTests.swift */; };
 		D6F06DD92BF1A77E00822C6E /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F06DD82BF1A77E00822C6E /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +83,11 @@
 		D6E346A62BF3735A00633B2C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		D6E346A92BF392E700633B2C /* FavoriteMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMenuViewModel.swift; sourceTree = "<group>"; };
 		D6E346AC2BF3932000633B2C /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
+		D6E346B22BF3CBE400633B2C /* LoadingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewTests.swift; sourceTree = "<group>"; };
+		D6E346B42BF3CE2A00633B2C /* CoinListControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListControllerTest.swift; sourceTree = "<group>"; };
+		D6E346B62BF3CF7700633B2C /* FavoriteMenuControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMenuControllerTest.swift; sourceTree = "<group>"; };
+		D6E346B82BF3CFDE00633B2C /* DetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewControllerTests.swift; sourceTree = "<group>"; };
+		D6E346BA2BF3D1F000633B2C /* Crypto-App.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = "Crypto-App.xctestplan"; path = "../Crypto-App.xctestplan"; sourceTree = "<group>"; };
 		D6F06DD82BF1A77E00822C6E /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +124,7 @@
 		D635C9272BEB8D69000835A5 = {
 			isa = PBXGroup;
 			children = (
+				D6E346BA2BF3D1F000633B2C /* Crypto-App.xctestplan */,
 				D635C9322BEB8D69000835A5 /* Crypto-App */,
 				D635C94C2BEB8D6B000835A5 /* Crypto-AppTests */,
 				D635C9562BEB8D6B000835A5 /* Crypto-AppUITests */,
@@ -160,6 +170,10 @@
 			isa = PBXGroup;
 			children = (
 				D635C94D2BEB8D6B000835A5 /* Crypto_AppTests.swift */,
+				D6E346B22BF3CBE400633B2C /* LoadingViewTests.swift */,
+				D6E346B42BF3CE2A00633B2C /* CoinListControllerTest.swift */,
+				D6E346B62BF3CF7700633B2C /* FavoriteMenuControllerTest.swift */,
+				D6E346B82BF3CFDE00633B2C /* DetailsViewControllerTests.swift */,
 			);
 			path = "Crypto-AppTests";
 			sourceTree = "<group>";
@@ -389,7 +403,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6E346B72BF3CF7700633B2C /* FavoriteMenuControllerTest.swift in Sources */,
+				D6E346B92BF3CFDE00633B2C /* DetailsViewControllerTests.swift in Sources */,
+				D6E346B52BF3CE2A00633B2C /* CoinListControllerTest.swift in Sources */,
 				D635C94E2BEB8D6B000835A5 /* Crypto_AppTests.swift in Sources */,
+				D6E346B32BF3CBE400633B2C /* LoadingViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

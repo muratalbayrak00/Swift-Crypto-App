@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import Crypto_App
+@testable import CryptoAPI
 
 final class Crypto_AppTests: XCTestCase {
 
@@ -32,5 +33,26 @@ final class Crypto_AppTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+ 
+
+    
+    func testCoinCellConfigureModel() {
+        let coinCell = CoinCell()
+        let coin = Coin(uuid: "testuuid", symbol: "BTC", name: "Bitcoin", color: "blue", iconURL: "https://example.com/bitcoin.png",
+                        marketCap: "1000000000", price: "50000", listedAt: 1620975539, tier: 1, change: "+5%", rank: 1, sparkline: ["50.000", "60.000", "70.000", "80.000"],
+                        lowVolume: true, coinrankingURL: "https://coinranking.com/coin/bitcoin", the24HVolume: "2432432342", btcPrice: "1")
+                                                                                                                                 
+        
+        coinCell.configureModel(coin)
+        
+        XCTAssertEqual(coinCell.coinSymbol.text, "BTC")
+        XCTAssertEqual(coinCell.coinName.text, "Bitcoin")
+        XCTAssertEqual(coinCell.coinPrice.text, "50000")
+        XCTAssertEqual(coinCell.coinChange.text, "+5%")
+        XCTAssertEqual(coinCell.coinChange.textColor, .blue)
+
+    }
+
 
 }

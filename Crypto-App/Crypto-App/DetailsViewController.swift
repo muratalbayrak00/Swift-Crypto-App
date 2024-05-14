@@ -102,7 +102,7 @@ class DetailsViewController: UIViewController, DetailsViewModelDelegate {
         }
     }
     
-    private func showNotification() {
+     func showNotification() {
         
         let message = "Coin added to favorites"
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)

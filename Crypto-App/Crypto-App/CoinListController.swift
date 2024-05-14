@@ -25,7 +25,7 @@ class CoinListController: UIViewController , LoadingShowable{
         super.viewDidLoad()
     
         title = "Crypto-App"
-        
+       
         tableView.register(cellType: CoinCell.self)
         filterButton.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
         
@@ -35,7 +35,7 @@ class CoinListController: UIViewController , LoadingShowable{
         super.viewWillAppear(animated)
         
         viewModel.load()
-        
+        tableView.backgroundColor = .gray
         reloadData()
     }
     
@@ -43,7 +43,7 @@ class CoinListController: UIViewController , LoadingShowable{
         showPicker()
     }
 
-    private func showPicker() {
+    func showPicker() {
         
         let pickerView = UIPickerView()
         pickerView.delegate = self

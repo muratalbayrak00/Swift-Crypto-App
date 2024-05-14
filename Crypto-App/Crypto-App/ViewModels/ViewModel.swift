@@ -36,7 +36,7 @@ protocol ViewModelDelegate: AnyObject {
 }
 
 final class ViewModel {
-    var allCoins = [Coin]()
+    private var allCoins = [Coin]()
     
     weak var delegate: ViewModelDelegate?
     var selectedFilterIndex = 0
