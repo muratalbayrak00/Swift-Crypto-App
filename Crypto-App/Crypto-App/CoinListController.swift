@@ -21,10 +21,8 @@ class CoinListController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+    
         title = "Crypto-App"
-        
         
         tableView.register(UINib(nibName: "CoinCell", bundle: nil), forCellReuseIdentifier: "coinCell")
         filterButton.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
@@ -42,66 +40,24 @@ class CoinListController: UIViewController {
                 self.allCoins = welcome.data.coins
                 formatCoinsPrice()
                 formatCoinsChange()
+                selectedFilterIndex = 0
+                reloadPickerData()
                 reloadData()
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
         
-        
         reloadData()
-        
-        
-        
     }
     
 
-    
     @objc func filterButtonTapped() {
         showPicker()
     }
-    
-    func formatCoinsPrice() {
-        for index in 0..<self.allCoins.count {
-            let coin = self.allCoins[index]
-            if let formattedPrice = formatPrice(coin.price) {
-                self.allCoins[index].price = formattedPrice
-            }
-        }
-        
-    }
-    
-    func formatPrice(_ priceString: String) -> String? {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = "$"
-        
-        if let price = Double(priceString) {
-            return formatter.string(from: NSNumber(value: price))
-        } else {
-            return nil
-        }
-    }
-    
-    func formatCoinsChange() {
-        for index in 0..<self.allCoins.count {
-            let coin = self.allCoins[index]
-            self.allCoins[index].change = formatChange(coin.change) ?? ""
-        }
-    }
-    
-    func formatChange(_ changeString: String) -> String? {
-        var formattedChange = changeString
-        
-        if !changeString.hasPrefix("-") {
-            formattedChange = "+" + formattedChange
-        }
-        
-        formattedChange += "%"
-        
-        return formattedChange
-    }
+
     func showPicker() {
+        
         let pickerView = UIPickerView()
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -115,7 +71,53 @@ class CoinListController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    func formatCoinsPrice() {
+        
+        for index in 0..<self.allCoins.count {
+            let coin = self.allCoins[index]
+            if let formattedPrice = formatPrice(coin.price) {
+                self.allCoins[index].price = formattedPrice
+            }
+        }
+        
+    }
     
+    func formatPrice(_ priceString: String) -> String? {
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "$"
+        
+        if let price = Double(priceString) {
+            return formatter.string(from: NSNumber(value: price))
+        } else {
+            return nil
+        }
+        
+    }
+    
+    func formatCoinsChange() {
+        
+        for index in 0..<self.allCoins.count {
+            let coin = self.allCoins[index]
+            self.allCoins[index].change = formatChange(coin.change) ?? ""
+        }
+        
+    }
+    
+    func formatChange(_ changeString: String) -> String? {
+        
+        var formattedChange = changeString
+        
+        if !changeString.hasPrefix("-") {
+            formattedChange = "+" + formattedChange
+        }
+        
+        formattedChange += "%"
+        
+        return formattedChange
+        
+    }
     func reloadData() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -152,6 +154,7 @@ extension CoinListController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension CoinListController: UIPickerViewDataSource, UIPickerViewDelegate {
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -168,9 +171,11 @@ extension CoinListController: UIPickerViewDataSource, UIPickerViewDelegate {
         selectedFilterIndex = row
         reloadPickerData()
     }
+    
 }
 
 extension CoinListController {
+    
     func date(from unixTimestamp: Double) -> Date {
         return Date(timeIntervalSince1970: unixTimestamp)
     }
@@ -178,17 +183,15 @@ extension CoinListController {
     func reloadPickerData() {
         switch selectedFilterIndex {
             
-        case 0: // Price
+        case 0: // Price filtering
             self.allCoins.sort { coin1, coin2 in
                 let price1String = coin1.price.dropFirst().replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")
                 let price2String = coin2.price.dropFirst().replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")
                 
                 if let price1 = Int(price1String), let price2 = Int(price2String) {
-                    print(price1)
-                    print(price2)
                     return price1 > price2
                 } else {
-                    print("Fiyat dönüşümünde hata oluştu")
+                    print("Error price filter")
                     return false
                 }
             }
