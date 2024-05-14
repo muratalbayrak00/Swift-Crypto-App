@@ -11,7 +11,9 @@ import CryptoAPI
 // ViewModel da UIKit olmaz :)
 
 extension ViewModel {
-    
+    fileprivate enum Constants {
+        static let tableViewHeight: Int = 75
+    }
 }
 
 protocol ViewModelProtocol {
@@ -20,6 +22,7 @@ protocol ViewModelProtocol {
     var selectedFilterIndex: Int { get set }
     func load()
     func coin(index: Int) -> Coin?
+    var tableViewHeight: Int { get }
     func formatCoinsPrice()
     func formatCoinsChange()
     func reloadPickerData()
@@ -63,7 +66,10 @@ final class ViewModel {
 }
 
 extension ViewModel: ViewModelProtocol {
-
+    
+    var tableViewHeight: Int {
+        Constants.tableViewHeight
+    }
     
     var numberOfItems: Int {
         allCoins.count

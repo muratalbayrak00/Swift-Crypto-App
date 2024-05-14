@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class FavoriteMenuController: UIViewController, LoadingShowable {
     
     @IBOutlet weak var tableView: UITableView!
@@ -33,7 +32,9 @@ class FavoriteMenuController: UIViewController, LoadingShowable {
     }
     
     private func showEmptyView() {
+        
         if favoriteMenuViewModel.getFavoriteCoins().isEmpty && view.viewWithTag(999) == nil {
+            
             let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
             emptyLabel.text = "Oops! You haven't added any \ncoins to your favorites yet."
             emptyLabel.textAlignment = .center

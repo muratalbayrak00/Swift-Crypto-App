@@ -25,7 +25,6 @@ protocol FavoriteMenuViewModelProtocol {
     func coin(index: Int) -> Coin?
     func getFavoriteCoins() -> [Coin]
     func setFavoriteCoins(_ coins: [Coin])
-  //  func setSelectedCoin(_ coin: Coin?)
     func coinModel() -> [Coin].Type
 
 }
@@ -42,6 +41,7 @@ final class FavoriteMenuViewModel {
     weak var delegate: FavoriteMenuViewModelDelegate?
     
     fileprivate func fetchFavoriteCoins() {
+        
         self.delegate?.showLoadingView()
         if let favoriteCoinData = UserDefaults.standard.data(forKey: "favoriteCoins"),
            let decodedFavoriteCoins = try? JSONDecoder().decode([Coin].self, from: favoriteCoinData) {
@@ -49,7 +49,6 @@ final class FavoriteMenuViewModel {
             self.favoriteCoins = decodedFavoriteCoins
             self.delegate?.hideLoadingView()
             self.delegate?.reloadData()
-            
 
         }
     }
@@ -57,8 +56,6 @@ final class FavoriteMenuViewModel {
 }
 
 extension FavoriteMenuViewModel: FavoriteMenuViewModelProtocol {
-    
-
     
     var numberOfItems: Int {
         favoriteCoins.count

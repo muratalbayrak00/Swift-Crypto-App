@@ -24,6 +24,7 @@ protocol DetailsViewModelProtocol {
     func setSelectedCoin(_ coin: Coin?)
     func getFavoriteCoins() -> [Coin]
     func fetchCoinDetails()
+    var tableViewHeight: Int { get }
     func setFavoriteCoins(_ coins: [CryptoAPI.Coin])
     func coin() -> CryptoAPI.Coin.Type
 
@@ -40,21 +41,25 @@ final class DetailsViewModel {
     
     weak var delegate: DetailsViewModelDelegate?
     
-
-
 }
 
 extension DetailsViewModel: DetailsViewModelProtocol {
-
+    var tableViewHeight: Int {
+        Constants.tableViewHeight
+    }
     
+
     func fetchCoinDetails() {
+        
         if let data = UserDefaults.standard.data(forKey: "favoriteCoins"),
            let decodedGames = try? JSONDecoder().decode([Coin].self, from: data) {
             favoriteCoins = decodedGames
         }
+        
     }
     
     func formatLargeNumber(_ numberString: String) -> String {
+        
         guard let number = Double(numberString) else { return "" }
         let absNumber = abs(number)
         let formatter = NumberFormatter()
@@ -74,9 +79,11 @@ extension DetailsViewModel: DetailsViewModelProtocol {
         default:
             return formatter.string(from: NSNumber(value: absNumber))!
         }
+        
     }
     
     func formatNumbers(_ priceString: String) -> String? {
+        
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         
@@ -90,25 +97,23 @@ extension DetailsViewModel: DetailsViewModelProtocol {
         } else {
             return nil
         }
+        
     }
     
     func convertUnixTimestampToDate(unixTime: Int) -> String {
+        
         let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
         
         return dateFormatter.string(from: date)
+        
     }
-    
-    
-
     
     func coin() -> CryptoAPI.Coin.Type {
         Coin.self
     }
-    
-
     
     func getSelectedCoin() -> CryptoAPI.Coin? {
         self.selectedCoin
@@ -122,15 +127,10 @@ extension DetailsViewModel: DetailsViewModelProtocol {
         self.favoriteCoins = coins
     }
     
-//    func setFavoriteCoins(_ coins: [CryptoAPI.Coin]) {
-//        self.favoriteCoins = coin
-//    }
-    
     func setSelectedCoin(_ coin: CryptoAPI.Coin?) {
         self.selectedCoin = coin
     }
     
-
     
 }
 

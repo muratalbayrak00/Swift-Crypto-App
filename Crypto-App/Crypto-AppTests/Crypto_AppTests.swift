@@ -34,9 +34,6 @@ final class Crypto_AppTests: XCTestCase {
         }
     }
     
- 
-
-    
     func testCoinCellConfigureModel() {
         let coinCell = CoinCell()
         let coin = Coin(uuid: "testuuid", symbol: "BTC", name: "Bitcoin", color: "blue", iconURL: "https://example.com/bitcoin.png",
