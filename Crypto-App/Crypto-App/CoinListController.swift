@@ -5,8 +5,7 @@
 //  Created by murat albayrak on 9.05.2024.
 //
 
-import Foundation
-import CryptoAPI
+
 import UIKit
 
 class CoinListController: UIViewController , LoadingShowable{
@@ -20,10 +19,7 @@ class CoinListController: UIViewController , LoadingShowable{
         }
     }
     
-  //  var allCoins = [Coin]()
-    
     let filterOptions = ["Price", "Market Cap", "24h Volume", "Change", "Listed At"]
- //   var selectedFilterIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,32 +39,11 @@ class CoinListController: UIViewController , LoadingShowable{
         reloadData()
     }
     
-
-//    fileprivate func fetchCoins() {
-//        showLoading()
-//        CoinLogic.shared.getCoins { [weak self] result in
-//            guard let self else { return }
-//            
-//            switch result {
-//            case .success(let welcome):
-//                hideLoading()
-//                self.allCoins = welcome.data.coins
-//                formatCoinsPrice()
-//                formatCoinsChange()
-//                selectedFilterIndex = 0
-//                reloadPickerData()
-//                reloadData()
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
-    
     @objc func filterButtonTapped() {
         showPicker()
     }
 
-    func showPicker() {
+    private func showPicker() {
         
         let pickerView = UIPickerView()
         pickerView.delegate = self
@@ -82,61 +57,6 @@ class CoinListController: UIViewController , LoadingShowable{
         
         present(alertController, animated: true, completion: nil)
     }
-    
-//    func formatCoinsPrice() {
-//        
-//        for index in 0..<self.allCoins.count {
-//            let coin = self.allCoins[index]
-//            if let formattedPrice = formatPrice(coin.price) {
-//                self.allCoins[index].price = formattedPrice
-//            }
-//        }
-//        
-//    }
-    
-//    func formatPrice(_ priceString: String) -> String? {
-//        
-//        let formatter = NumberFormatter()
-//        formatter.numberStyle = .currency
-//        formatter.currencySymbol = "$"
-//        
-//        if let price = Double(priceString) {
-//            return formatter.string(from: NSNumber(value: price))
-//        } else {
-//            return nil
-//        }
-//        
-//    }
-    
-//    func formatCoinsChange() {
-//        
-//        for index in 0..<self.allCoins.count {
-//            let coin = self.allCoins[index]
-//            self.allCoins[index].change = formatChange(coin.change) ?? ""
-//        }
-//        
-//    }
-    
-//    func formatChange(_ changeString: String) -> String? {
-//        
-//        var formattedChange = changeString
-//        
-//        if !changeString.hasPrefix("-") {
-//            formattedChange = "+" + formattedChange
-//        }
-//        
-//        formattedChange += "%"
-//        
-//        return formattedChange
-//        
-//    }
-    
-//    func reloadData() {
-//        DispatchQueue.main.async {
-//            self.tableView.reloadData()
-//        }
-//    }
-    
 }
 
 extension CoinListController: UITableViewDataSource, UITableViewDelegate {
@@ -147,7 +67,6 @@ extension CoinListController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeCell(cellType: CoinCell.self, indexPath: indexPath)
-      //  cell.configureModel(allCoins[indexPath.row])
         if let coin = viewModel.coin(index: indexPath.row) {
             cell.configureModel(coin)
         }
@@ -159,11 +78,19 @@ extension CoinListController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCoin = viewModel.coin(index: indexPath.row)
-        if let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsPageViewController") as? DetailsViewController {
-            detailsVC.selectedCoin = selectedCoin
-            self.navigationController?.pushViewController(detailsVC, animated: true)
+
+        guard let selectedCoin = viewModel.coin(index: indexPath.row) else {
+            return
         }
+        
+        guard let detailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsPageViewController") as? DetailsViewController else {
+            fatalError("Unable to instantiate DetailsViewController")
+        }
+        
+        let detailsViewModel = DetailsViewModel()
+        detailsViewModel.selectedCoin = selectedCoin
+        detailsVC.detailsViewModel = detailsViewModel
+        navigationController?.pushViewController(detailsVC, animated: true)
     }
     
 }
@@ -183,9 +110,8 @@ extension CoinListController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //selectedFilterIndex = row
-        //reloadPickerData()
-       // selectedFilterIndex = row
+
+        viewModel.selectedFilterIndex = row
         viewModel.reloadPickerData()
     }
     
@@ -201,69 +127,9 @@ extension CoinListController: ViewModelDelegate {
     }
     
     func reloadData() {
-            tableView.reloadData()
+        tableView.reloadData()
     }
     
-    
 }
-    
-extension CoinListController {
-    
-//    func date(from unixTimestamp: Double) -> Date {
-//        return Date(timeIntervalSince1970: unixTimestamp)
-//    }
-    
-//    func reloadPickerData() {
-//        switch selectedFilterIndex {
-//            
-//        case 0: // Price filtering
-//            self.allCoins.sort { coin1, coin2 in
-//                let price1String = coin1.price.dropFirst().replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")
-//                let price2String = coin2.price.dropFirst().replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")
-//                
-//                if let price1 = Int(price1String), let price2 = Int(price2String) {
-//                    return price1 > price2
-//                } else {
-//                    print("Error price filter")
-//                    return false
-//                }
-//            }
-//            
-//        case 1: // Market Cap
-//            allCoins.sort { coin1, coin2 in
-//                return Int(coin1.marketCap) ?? 0 > Int(coin2.marketCap) ?? 0
-//            }
-//        case 2: // 24h Volume]
-//            self.allCoins.sort { coin1, coin2 in
-//                return Int(coin1.the24HVolume) ?? 0 > Int(coin2.the24HVolume) ?? 0
-//            }
-//            
-//            reloadData()
-//        case 3: // Change
-//            allCoins.sort { coin1, coin2 in
-//                let change1 = coin1.change.replacingOccurrences(of: "+", with: "").replacingOccurrences(of: "%", with: "")
-//                let change2 = coin2.change.replacingOccurrences(of: "+", with: "").replacingOccurrences(of: "%", with: "")
-//                
-//                if let changeValue1 = Double(change1), let changeValue2 = Double(change2) {
-//                    return changeValue1 > changeValue2
-//                } else {
-//                    return false
-//                }
-//            }
-//        case 4: // Listed At
-//            allCoins.sort { coin1, coin2 in
-//                let date1 = date(from: Double(coin1.listedAt))
-//                let date2 = date(from: Double(coin2.listedAt))
-//                return date2 > date1
-//            }
-//            
-//        default:
-//            break
-//        }
-//        
-//        DispatchQueue.main.async {
-//            self.tableView.reloadData()
-//        }
-//    }
-}
+
 

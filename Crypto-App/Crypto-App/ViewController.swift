@@ -47,8 +47,14 @@ class ViewController: UIViewController {
  [x] Sol/btc ekle
 
  [] final priraver file priovate lazy keywordlerine dikkat et
- [] mvvm e tasi
- [] sari hatalari coz 
+ 
+ [x] mvvm e tasi
+  [x] diger CoinListController
+    [x] picker view kaldi sadece
+  [x] FavoriteMenucontroller
+  [x] constants lari ekle hepsine
+  [x] detailsViewController
+ 
  [] unit test yaz
  [] readme ekle
  

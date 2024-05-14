@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import CryptoAPI
 
-class DetailsViewController: UIViewController {
+class DetailsViewController: UIViewController, DetailsViewModelDelegate {
 
     @IBOutlet weak var currentPrice: UILabel!
     @IBOutlet weak var currentPriceChange: UILabel!
@@ -25,34 +24,34 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var favoriteIcon: UIImageView!
     @IBOutlet weak var webSiteLabel: UILabel!
     
-    var selectedCoin: Coin?
-    var favoriteCoins : [Coin] = []
+    
     var isStarFilled = false
+    
+    var detailsViewModel: DetailsViewModelProtocol! {
+        didSet {
+            detailsViewModel.delegate = self
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        guard let selectedCoin = selectedCoin else {
-            print("selectedCoin is empty")
-            return
-        }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
         webSiteLabel.isUserInteractionEnabled = true
         webSiteLabel.addGestureRecognizer(tapGesture)
         webSiteLabel.textColor = .blue
-        configure(selectedCoin)
+        configure()
         
         let tapGestureFavorite = UITapGestureRecognizer(target: self, action: #selector(imageTap))
         favoriteIcon.isUserInteractionEnabled = true
         favoriteIcon.addGestureRecognizer(tapGestureFavorite)
         
-        if let data = UserDefaults.standard.data(forKey: "favoriteCoins"),
-           let decodedGames = try? JSONDecoder().decode([Coin].self, from: data) {
-            favoriteCoins = decodedGames
-        }
+
         
-        if favoriteCoins.contains(where: { $0.symbol == selectedCoin.symbol }) {
+        detailsViewModel.fetchCoinDetails()
+        
+        if detailsViewModel.getFavoriteCoins().contains(where: { $0.symbol == detailsViewModel.getSelectedCoin()?.symbol }) {
             
             favoriteIcon.image = UIImage(systemName: "heart.fill")
             isStarFilled = true
@@ -64,38 +63,46 @@ class DetailsViewController: UIViewController {
         
     }
     
-    @objc func imageTap() {
+     @objc func imageTap() {
         
         if isStarFilled {
             favoriteIcon.image = UIImage(systemName: "heart")
             isStarFilled = false
             
-            if let index = favoriteCoins.firstIndex(where: { $0.symbol == selectedCoin?.symbol}) {
+
+            if let selectedCoin = detailsViewModel.getSelectedCoin(),
+               let index = detailsViewModel.getFavoriteCoins().firstIndex(where: { $0.symbol == selectedCoin.symbol }) {
+                var favoriteCoins = detailsViewModel.getFavoriteCoins()
                 favoriteCoins.remove(at: index)
+                detailsViewModel.setFavoriteCoins(favoriteCoins)
             }
-            
+
         } else {
+         
             favoriteIcon.image = UIImage(systemName: "heart.fill")
             isStarFilled = true
             
-            if let selectedCoin = selectedCoin {
+
+            if let selectedCoin = detailsViewModel.getSelectedCoin() {
+                var favoriteCoins = detailsViewModel.getFavoriteCoins()
                 favoriteCoins.append(selectedCoin)
+                detailsViewModel.setFavoriteCoins(favoriteCoins)
             }
             showNotification()
         }
         
-        if let encodedData = try? JSONEncoder().encode(favoriteCoins) {
+        if let encodedData = try? JSONEncoder().encode(detailsViewModel.getFavoriteCoins()) {
             UserDefaults.standard.set(encodedData, forKey: "favoriteCoins")
         }
     }
     
-    @objc func labelTapped(_ sender: UITapGestureRecognizer) {
-        if let url = URL(string: selectedCoin?.coinrankingURL ?? "") {
+     @objc func labelTapped(_ sender: UITapGestureRecognizer) {
+        if let url = URL(string: detailsViewModel.getSelectedCoin()?.coinrankingURL ?? "") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
-    func showNotification() {
+    private func showNotification() {
         
         let message = "Coin added to favorites"
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -107,31 +114,33 @@ class DetailsViewController: UIViewController {
         
     }
     
-    func configure(_ selectedCoin: Coin) {
+    private func configure() {
+        
+        guard let selectedCoin = detailsViewModel.getSelectedCoin() else { return }
         
         navigationItem.title = selectedCoin.symbol
         
         detailCoinName.text = selectedCoin.name
         currentPrice.text = selectedCoin.price
         currentPriceChange.text = selectedCoin.change
-        marketCap.text = formatLargeNumber(selectedCoin.marketCap)
+        marketCap.text = detailsViewModel.formatLargeNumber(selectedCoin.marketCap)
         rank.text = "\(selectedCoin.rank)"
-        volume.text = formatLargeNumber(selectedCoin.the24HVolume)
+        volume.text = detailsViewModel.formatLargeNumber(selectedCoin.the24HVolume)
         btcPriceTitle.text = "\(selectedCoin.symbol)/BTC"
-        btcPriceValue.text = formatNumbers(selectedCoin.btcPrice)
-        listedAt.text = convertUnixTimestampToDate(unixTime: selectedCoin.listedAt)
+        btcPriceValue.text = detailsViewModel.formatNumbers(selectedCoin.btcPrice)
+        listedAt.text = detailsViewModel.convertUnixTimestampToDate(unixTime: selectedCoin.listedAt)
         
         if let url = URL(string: selectedCoin.iconURL.replacingSVGWithPNG()) {
             detailCoinImage.sd_setImage(with: url)
         }
         
         if let sparklineMax = selectedCoin.sparkline.max() {
-            high24Value.text = formatNumbers(sparklineMax)
+            high24Value.text = detailsViewModel.formatNumbers(sparklineMax)
             high24Value.textColor = .green
         }
         
         if let sparklineMin = selectedCoin.sparkline.min() {
-            low24Value.text = formatNumbers(sparklineMin)
+            low24Value.text = detailsViewModel.formatNumbers(sparklineMin)
             low24Value.textColor = .red
         }
        
@@ -144,60 +153,6 @@ class DetailsViewController: UIViewController {
                 currentPriceChange.textColor = .red
             }
         }
-        
     }
-    
-    func convertUnixTimestampToDate(unixTime: Int) -> String {
-        
-        let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        
-        return dateFormatter.string(from: date)
-    }
-    
-    
-    func formatNumbers(_ priceString: String) -> String? {
-        
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        
-        if priceString.starts(with: "0"){
-            formatter.maximumFractionDigits = 6
-        }
-        formatter.currencySymbol = "$"
-        
-        if let price = Double(priceString) {
-            return formatter.string(from: NSNumber(value: price))
-        } else {
-            return nil
-        }
-    }
-    
-    func formatLargeNumber(_ numberString: String) -> String {
-        
-        guard let number = Double(numberString) else { return "" }
-        let absNumber = abs(number)
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-
-        switch absNumber {
-            
-        case 1_000_000...999_999_999:
-            let formattedNumber = absNumber / 1_000_000
-            return formatter.string(from: NSNumber(value: formattedNumber))! + "M"
-        case 1_000_000_000...999_999_999_999:
-            let formattedNumber = absNumber / 1_000_000_000
-            return formatter.string(from: NSNumber(value: formattedNumber))! + "Bn"
-        case 1_000_000_000_000...999_999_999_999_999:
-            let formattedNumber = absNumber / 1_000_000_000_000
-            return formatter.string(from: NSNumber(value: formattedNumber))! + "Tn"
-        default:
-            return formatter.string(from: NSNumber(value: absNumber))!
-        }
-        
-    }
-    
 
 }

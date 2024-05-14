@@ -17,6 +17,7 @@ extension ViewModel {
 protocol ViewModelProtocol {
     var delegate: ViewModelDelegate? { get set }
     var numberOfItems: Int { get }
+    var selectedFilterIndex: Int { get set }
     func load()
     func coin(index: Int) -> Coin?
     func formatCoinsPrice()
