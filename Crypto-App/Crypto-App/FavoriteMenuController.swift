@@ -8,7 +8,7 @@
 import UIKit
 import CryptoAPI
 
-class FavoriteMenuController: UIViewController {
+class FavoriteMenuController: UIViewController, LoadingShowable {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -17,17 +17,24 @@ class FavoriteMenuController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UINib(nibName: "CoinCell", bundle: nil), forCellReuseIdentifier: "coinCell")
+        tableView.register(cellType: CoinCell.self)
         navigationItem.title = "Favorite Coins"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        fetchFavoriteCoins()
+
+    }
+    
+    fileprivate func fetchFavoriteCoins() {
+        showLoading()
         if let favoriteCoinData = UserDefaults.standard.data(forKey: "favoriteCoins"),
            let decodedFavoriteGames = try? JSONDecoder().decode([Coin].self, from: favoriteCoinData) {
             
             self.favoriteCoins = decodedFavoriteGames
+            hideLoading()
             tableView.reloadData()
             
             if favoriteCoins.isEmpty && view.viewWithTag(999) == nil {
@@ -43,9 +50,8 @@ class FavoriteMenuController: UIViewController {
             }
         }
     }
-    
-    
 }
+
 
 extension FavoriteMenuController: UITableViewDelegate, UITableViewDataSource {
     
@@ -54,8 +60,8 @@ extension FavoriteMenuController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "coinCell", for: indexPath) as! CoinCell
-        
+        let cell = tableView.dequeCell(cellType: CoinCell.self, indexPath: indexPath)
+
         cell.configureModel(favoriteCoins[indexPath.row])
         
         return cell

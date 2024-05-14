@@ -11,7 +11,7 @@
         <!--Favorite Coins-->
         <scene sceneID="Dex-Li-bgl">
             <objects>
-                <viewController title="Favorite Coins" id="J6w-xt-Cpu" customClass="FavoriteMenuController" customModule="Crypto_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FavoriteMenuController" title="Favorite Coins" id="J6w-xt-Cpu" customClass="FavoriteMenuController" customModule="Crypto_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kUg-ic-d6m">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,7 +56,7 @@
         <!--Coin List Controller-->
         <scene sceneID="olU-Ud-RTd">
             <objects>
-                <viewController id="2MO-06-PYK" customClass="CoinListController" customModule="Crypto_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CoinListController" id="2MO-06-PYK" customClass="CoinListController" customModule="Crypto_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hXU-ac-WbA">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -394,7 +394,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="g9i-B5-765">
             <objects>
-                <tabBarController id="7pe-cL-jWk" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="7pe-cL-jWk" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9Gv-yl-YbR">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -8,8 +8,8 @@
 import Foundation
 import Alamofire
 
-public class CoinService {
-    
+public class CoinService: CoinServiceProtocol {
+
     public static let shared: CoinService = {
         let instance = CoinService()
         return instance
@@ -34,6 +34,9 @@ public class CoinService {
             }
         }
     }
-    
-    
+
+}
+
+protocol CoinServiceProtocol {
+    func fetchCoins<T: Decodable>(urlString: String, decodeToType type: T.Type, completionHandler: @escaping (Result<T, Error>) -> Void)
 }

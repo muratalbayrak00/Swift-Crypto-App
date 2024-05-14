@@ -29,10 +29,11 @@ class ViewController: UIViewController {
  [x] change e renklendirme ver
  [x] fiyat formatla
  [x] filter picker view i duzelt
- [ ] coklu filtreleme yap
- [] loading view
+ [x] loading view
+ [x] extension lari ayir
+ [] coklu filtreleme yap
  [] picker in basina bir title ekle
- [] extension lari ayir
+
  
 
  
